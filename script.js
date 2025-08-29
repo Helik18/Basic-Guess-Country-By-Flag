@@ -44,10 +44,18 @@ function displayQuestion() {
         flagImage.src = currentCountry.flag;
         feedbackMessage.textContent = '';
         guessInput.value = '';
+
+        
+        flagImage.classList.remove('fade-in');
+        void flagImage.offsetWidth; 
+        flagImage.classList.add('fade-in');
     } else {
         endGame();
     }
 }
+
+
+
 
 function checkAnswer() {
     const guess = guessInput.value.trim().toLowerCase();
@@ -70,18 +78,21 @@ function checkAnswer() {
 
 function updateScore() {
     scoreDisplay.textContent = `Score: ${score}`;
+    scoreDisplay.classList.add('fade-in');
+    setTimeout(() => scoreDisplay.classList.remove('fade-in'), 600);
 }
 
+
 function endGame() {
-    feedbackMessage.textContent = `Quiz finished! Your final score is ${score} out of ${shuffledCountries.length}.`;
-    feedbackMessage.className = 'text-gray-700';
+    feedbackMessage.textContent = `🎉 Quiz finished! Your final score is ${score} out of ${shuffledCountries.length}.`;
+    feedbackMessage.className = 'fade-in text-gray-700';
     flagImage.src = "";
     guessInput.disabled = true;
     submitButton.disabled = true;
 
     const playAgainButton = document.createElement('button');
     playAgainButton.textContent = 'Play Again';
-    playAgainButton.className = 'mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all';
+    playAgainButton.className = 'mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition-all fade-in';
     playAgainButton.onclick = () => {
         guessInput.disabled = false;
         submitButton.disabled = false;
@@ -90,6 +101,7 @@ function endGame() {
     };
     document.getElementById('quiz-container').appendChild(playAgainButton);
 }
+
 
 submitButton.addEventListener('click', checkAnswer);
 
